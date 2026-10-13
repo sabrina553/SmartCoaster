@@ -139,7 +139,14 @@ python3 tester.py    # check the wiring: values should rise as you press the coa
 python3 .            # run the tracker
 ```
 
-Set the ThingSpeak write key in the `key` variable in `__main__.py` and keep it out of version control. The tuning constants (sample interval, window size, retained fraction, outlier threshold, refill tolerance, daily goal) are plain values in `__main__.py`.
+Set the ThingSpeak write key in the environment (`export THINGSPEAK_WRITE_KEY=...`); without it, uploads are skipped. The tuning constants (sample interval, window size, retained fraction, outlier threshold, refill tolerance, daily goal) are plain values in `__main__.py`.
+
+## What I learnt
+
+- **Sensors are the easy part; the signal is the hard part.** A force-sensing resistor is cheap but noisy, drifts and is non-linear, so most of the work went into filtering, outlier rejection and calibration rather than reading the ADC.
+- **Mechanics decide accuracy.** How force reaches the sensor mattered as much as any code.
+- **Check logic levels before wiring.** Powering the ADC from 5 V into a 3.3 V GPIO (see below) worked, but only by luck.
+- **Keep secrets out of code.** The ThingSpeak write key was hard-coded and ended up in the public history. It now comes from an environment variable.
 
 ## Limitations
 
