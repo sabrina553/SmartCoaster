@@ -54,7 +54,7 @@ def read_voltage():
 
 
 ################################################################################
-key = 'REMOVED_THINGSPEAK_KEY'
+key = os.environ.get('THINGSPEAK_WRITE_KEY', '')
 def thingspeak_post():
     threading.Timer(15, thingspeak_post).start()
     

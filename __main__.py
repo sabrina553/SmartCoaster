@@ -53,9 +53,11 @@ def read_voltage():
 
 
 ################################################################################
-key = 'REMOVED_THINGSPEAK_KEY'
-def thingspeak_post(voltage, mass):    
-    threading.Timer(15, thingspeak_post).start()
+# Write key comes from the environment so it never lands in git again
+key = os.environ.get('THINGSPEAK_WRITE_KEY', '')
+def thingspeak_post(voltage, mass):
+    if not key:
+        return
     global daily_water_consumption   
     
     params = urllib.parse.urlencode({'field1': voltage,'field2': mass, 'field3': daily_water_consumption , 'key':key })
